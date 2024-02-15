@@ -1,0 +1,11 @@
+pub(crate) const WHITE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(255, 255, 255);
+pub(crate) const BLACK: sdl2::pixels::Color = sdl2::pixels::Color::RGB(0, 0, 0);
+pub(crate) const RED: sdl2::pixels::Color = sdl2::pixels::Color::RGB(255, 0, 0);
+pub(crate) const GREEN: sdl2::pixels::Color = sdl2::pixels::Color::RGB(0, 255, 0);
+pub(crate) const BLUE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(0, 0, 255);
+pub(crate) const YELLOW: sdl2::pixels::Color = sdl2::pixels::Color::RGB(255, 255, 0);
+pub(crate) const CYAN: sdl2::pixels::Color = sdl2::pixels::Color::RGB(0, 255, 255);
+pub(crate) const MAGENTA: sdl2::pixels::Color = sdl2::pixels::Color::RGB(255, 0, 255);
+pub(crate) const GRAY: sdl2::pixels::Color = sdl2::pixels::Color::RGB(128, 128, 128);
+pub(crate) const DARK_GRAY: sdl2::pixels::Color = sdl2::pixels::Color::RGB(64, 64, 64);
+pub(crate) const LIGHT_GRAY: sdl2::pixels::Color = sdl2::pixels::Color::RGB(192, 192, 192);

@@ -1,0 +1,11 @@
+[package]
+name = "grapher"
+version = "0.1.0"
+authors = ["Akari202 <akaritwo0two@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+log = "0.4"
+env_logger = "0.10"
+sdl2 = { version = "0.36", features = ["ttf"] }
+rayon = "1.8.1"
