@@ -15,7 +15,6 @@ pub struct Axis2D {
 
 pub trait DrawableAxis2D {
     fn draw(&self, renderer: &mut Renderer, axis2d: &Axis2D) -> Result<(), String>;
-    fn evaluate(&self, x: f32) -> Option<f32>;
 }
 
 impl Axis2D {
@@ -83,18 +82,6 @@ impl Axis2D {
 
     pub fn add_object(&mut self, object: Box<dyn DrawableAxis2D>) {
         self.objects.push(object);
-    }
-
-    pub fn highest_object(&self, x: f32) -> Option<f32> {
-        let mut highest: Option<f32> = None;
-        for object in &self.objects {
-            if let Some(y) = object.evaluate(x) {
-                if highest.is_none() || y.abs() > highest.unwrap().abs() {
-                    highest = Some(y);
-                }
-            }
-        }
-        highest
     }
 }
 
