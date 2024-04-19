@@ -37,7 +37,7 @@ impl DrawableAxis2D for UnaryFunction {
         Ok(())
     }
 
-    fn evaluate(&self, x: f32) -> Option<f32> {
-        Some((self.function)(x))
+    fn evaluate(&self, x: f32, y: f32) -> Option<(f32, f32)> {
+        Some((0.0, (self.function)(x)))
     }
 }

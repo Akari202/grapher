@@ -22,6 +22,8 @@ mod scatter;
 mod cursor;
 mod sort;
 mod audio;
+mod mohr;
+mod graph;
 
 pub fn main() -> Result<(), String> {
     let sdl_context = sdl2::init()?;
@@ -51,32 +53,13 @@ pub fn main() -> Result<(), String> {
         );
         axis.add_object(Box::new(cursor::SnappingCursor::new(&renderer.sdl)));
         axis.add_object(Box::new(cursor::CursorReadout::new(PixelCoordinate2D::new(WINDOW_WIDTH as i32 - 175, 0), ReadoutType::Cartesian)));
-        axis.add_object(Box::new(cursor::CursorReadout::new(PixelCoordinate2D::new(WINDOW_WIDTH as i32 - 175, 25), ReadoutType::Pixel)));
-
-        axis.add_object(Box::new(UnaryFunction::new(Box::new(|x| x.sin()), BLUE)));
-        axis.add_object(Box::new(UnaryFunction::new(Box::new(
-            |x| {
-                4.0 / std::f32::consts::PI * (0..3).fold(0.0, |acc, n| {
-                    let n = 2 * n + 1;
-                    acc + (1.0 / n as f32) * (n as f32 * x).sin()
-                })
-            }
-        ), GREEN)));
-        axis.add_object(Box::new(UnaryFunction::new(Box::new(
-            |x| {
-                if x.sin() > 0.0 {
-                    1.0
-                } else {
-                    -1.0
-                }
-            }
-        ), RED)));
-        // axis.add_object(Box::new(UnaryFunction::new(Box::new(|x| x.powi(5) - 10.0 * x.powi(4) + 40.0 * x.powi(3) - 80.0 * x.powi(2) + 80.0 * x - 32.0))));
     }
 
+    let mohr = mohr::MohrsCircle::new([200.0, 100.0, 0.0], [80.0, 20.0, 0.0]);
 
-    // let mut sort_vis = sort::SortingVisualization::new(sort::SortType::Shell);
-    let mut sort_vis = sort::SortingVisualization::new(sort::SortType::Insertion);
+    let mut graph = graph::Graph::new(0);
+    // graph.fill_random(20);
+    graph.add_vertex_from_list(&[(0,1), (0,2), (0,5), (1,4), (2,3), (3,8), (4,9), (5,6), (5,7), (6,7)])?;
 
     'running: loop {
         for event in renderer.event_pump.poll_iter() {
@@ -86,29 +69,15 @@ pub fn main() -> Result<(), String> {
                     keycode: Some(Keycode::Escape),
                     ..
                 } => break 'running,
-                Event::KeyDown {
-                    keycode: Some(Keycode::S),
-                    ..
-                } => { sort_vis.shuffle() },
-                Event::KeyDown {
-                    keycode: Some(Keycode::Space),
-                    ..
-                } => { if !sort_vis.sorted { sort_vis.step() }},
-                Event::KeyDown {
-                    keycode: Some(Keycode::A),
-                    ..
-                } => { if !sort_vis.sorted { sort_vis.auto_sort = !sort_vis.auto_sort }},
                 _ => {}
             }
         }
 
-        if sort_vis.auto_sort {
-            sort_vis.step();
-        }
-
         renderer.clear();
         // renderer.draw_object(&axis)?;
-        renderer.draw_object(&sort_vis)?;
+        // renderer.draw_arrow(PixelCoordinate2D::new(0, 0), PixelCoordinate2D::new(100, 100), RED)?;
+        // renderer.draw_object(&mohr)?;
+        renderer.draw_object(&graph)?;
 
         renderer.present();
 

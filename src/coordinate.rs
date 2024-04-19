@@ -1,4 +1,5 @@
 use crate::axis::Axis2D;
+use crate::config::{CENTER_X, CENTER_Y};
 use crate::renderer::Renderer;
 
 #[derive(Clone, Copy, Debug)]
@@ -22,6 +23,16 @@ impl PixelCoordinate2D {
 
     pub fn origin() -> PixelCoordinate2D {
         PixelCoordinate2D { x: 0, y: 0 }
+    }
+
+    pub fn center() -> PixelCoordinate2D {
+        PixelCoordinate2D { x: CENTER_X as i32, y: CENTER_Y as i32 }
+    }
+}
+
+impl PartialEq for PixelCoordinate2D {
+    fn eq(&self, other: &Self) -> bool {
+        self.x == other.x && self.y == other.y
     }
 }
 

@@ -97,7 +97,7 @@ impl DrawableAxis2D for CursorReadout {
         Ok(())
     }
 
-    fn evaluate(&self, _x: f32) -> Option<f32> {
+    fn evaluate(&self, _x: f32, _y: f32) -> Option<(f32, f32)> {
         None
     }
 }
@@ -136,7 +136,7 @@ impl DrawableAxis2D for SnappingCursor {
         Ok(())
     }
 
-    fn evaluate(&self, _x: f32) -> Option<f32> {
+    fn evaluate(&self, _x: f32, _y: f32) -> Option<(f32, f32)> {
         None
     }
 }

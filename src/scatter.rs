@@ -26,10 +26,10 @@ impl DrawableAxis2D for Scatter2D {
         Ok(())
     }
 
-    fn evaluate(&self, x: f32) -> Option<f32> {
+    fn evaluate(&self, x: f32, _y: f32) -> Option<(f32, f32)> {
         for object in &self.objects {
             if object.x == x {
-                return Some(object.y);
+                return Some((0.0, object.y));
             }
         }
         None
