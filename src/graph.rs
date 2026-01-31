@@ -1,6 +1,6 @@
 use std::cmp::PartialEq;
 use rand::Rng;
-use crate::colors::{BLUE, DARK_YELLOW, GRAY, LIGHT_GRAY, WHITE, YELLOW};
+use crate::colors::{BLUE, CYAN, DARK_YELLOW, GRAY, LIGHT_GRAY, WHITE, YELLOW};
 use crate::coordinate::PixelCoordinate2D;
 use crate::renderer::{Drawable, Renderer};
 
@@ -23,7 +23,8 @@ pub struct Edge {
 pub struct Vertex {
     pub position: PixelCoordinate2D,
     pub value: i32,
-    children: u8
+    children: u8,
+    origin: bool
 }
 
 impl Graph {
@@ -33,7 +34,8 @@ impl Graph {
             Vertex {
                 position: PixelCoordinate2D::center(),
                 value: source,
-                children: 0
+                children: 0,
+                origin: true
             },
             Edge {
                 start: PixelCoordinate2D::center(),
@@ -107,7 +109,8 @@ impl Graph {
                     source_vertex.position.y + (LINE_LENGTH as f64 * angle.sin()) as i32
                 ),
                 value: target,
-                children: source_vertex.children
+                children: source_vertex.children,
+                origin: false
             };
             let edge = Edge {
                 start: PixelCoordinate2D::new(
@@ -153,7 +156,8 @@ impl Graph {
 impl Drawable for Graph {
     fn draw(&self, renderer: &mut Renderer) -> Result<(), String> {
         for (vertex, edge) in &self.objects {
-            renderer.draw_circle(vertex.position, RADIUS, WHITE)?;
+            let color = if vertex.origin { CYAN } else { WHITE };
+            renderer.draw_circle(vertex.position, RADIUS, color)?;
             if edge.start != edge.end {
                 if edge.tree_type {
                     renderer.draw_line(edge.start, edge.end, LIGHT_GRAY)?;
